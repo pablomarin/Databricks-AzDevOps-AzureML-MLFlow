@@ -10,17 +10,28 @@
 8.	In Azure Portal: Create an Azure KeyVault, on the same resource group of step 3, with the SECRETS stated below
 9.	In Azure DevOps: In Pipelines->Library, Create a Variable Group in Pipeline->Library called: mlops-azdevops-db-azml-vg, and link Secrets from Azure Key Vault as variables. Add all the variables created on Step 8.
 10.	In Azure DevOps: In Artifacts, Create a FEED called: mlops-azdevops-db-azml
-11.	In Azure DevOps: In Pipelines, Run the Pipeline
+11. In Azure DevOps: In Artifacts, Go to the settings->Permissions of the Feed created on Step 10 and make sure that "Project Collection Build Service" and "MLOps-AzDevOps-Databricks-AZML Build Service" are set with Contributor Role.
+12.	In Azure DevOps: In Pipelines, Create Pipeline -> Azure Repos Git -> Select this project MLOps-AzDevOps-Databricks-AZML ->  Existing Azure Pipelines YAML file -> Select the only pipeline available in /pipelines/dbx-pipeline.yml
+13. In Azure DevOps: In Pipelines, Run the Pipeline.
 
 
 ## Pipeline will need a Azure Secret Vault with the following secrets.
 <br>
-***DBXInstance***: Databricks instance, eg: adb-631237481529976.16<br>
-***ResourceGroup***: Resource Group where Databricks instance is<br>
-***SubscriptionID***: Azure Subscription ID where Databricks instance is<br>
-***SVCApplicationID***: Application (client) ID for the Service Principal (app registration in Azure AD)<br>
-***SVCDirectoryID***: Directory (tenant) ID for the Service Principal<br>
-***SVCSecretKey***: Secret value for the Service Principal<br>
-***WorkspaceName***: Name of the Databricks Workspace<br>
-***AzmlResourceGroup***: Azure Machine Learning Resource Group<br>
-***AzmlWORKSPACEname***: Name of the Azure Machine Learning Workspace<br>
+|                       |                                                                                  |
+|-----------------------|----------------------------------------------------------------------------------|
+| **DBXInstance**       | Databricks instance, eg: adb-631237481529976.16                                  |
+| **ResourceGroup**     | Resource Group where Databricks instance is                                      |
+| **SubscriptionID**    | Azure Subscription ID where Databricks instance is                               |
+| **SVCApplicationID**  | Application (client) ID for the Service Principal (app registration in Azure AD) |
+| **SVCDirectoryID**    | Directory (tenant) ID for the Service Principal                                  |
+| **SVCSecretKey**      | Secret value for the Service Principal                                           |
+| **WorkspaceName**     | Name of the Databricks Workspace                                                 |
+| **AzmlResourceGroup** | Azure Machine Learning Resource Group                                            |
+| **AzmlWORKSPACEname** | Name of the Azure Machine Learning Workspace                                     |
+
+
+## Architecture
+![Architecture!](/Architecture-small.png "Architecture")
+
+## Pipeline Run Example<br>
+![Pipeline Run Sample!](/PipelineResults.png "Pipeline Run Sample")
