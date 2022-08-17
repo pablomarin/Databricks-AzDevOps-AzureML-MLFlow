@@ -16,7 +16,7 @@
 
 
 ## Pipeline will need a Azure Secret Vault with the following secrets.
-<br>
+
 |                       |                                                                                  |
 |-----------------------|----------------------------------------------------------------------------------|
 | **DBXInstance**       | Databricks instance, eg: adb-631237481529976.16                                  |
@@ -31,7 +31,7 @@
 
 
 ## Architecture
-![Architecture!](/Architecture-small.png "Architecture")
+![Architecture!](/Architecture.png "Architecture")
 
 ## Pipeline Run Example<br>
 ![Pipeline Run Sample!](/PipelineResults.png "Pipeline Run Sample")
