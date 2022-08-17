@@ -78,18 +78,20 @@ print("SDK Version:", azureml.core.VERSION)
 
 # COMMAND ----------
 
-subscription_id = "b1395605-1fe9-4af4-b3ff-82a4725a3791"  # you should be owner or contributor
-resource_group = "pabmar-rg"  # you should be owner or contributor
-workspace_name = "pabmar-workspace"  # your workspace name
-workspace_region = "southcentralus"  # your region
-
-# COMMAND ----------
-
+import os
+from azureml.core import Workspace
 from azureml.core.authentication import ServicePrincipalAuthentication
 
-sp = ServicePrincipalAuthentication(tenant_id="72f988bf-86f1-41af-91ab-2d7cd011db47", # tenantID
-                                    service_principal_id="ec0640c7-61fa-4662-bce4-8a3e931939ac", # clientId
-                                    service_principal_password="LQp7Q~oSViWSDSrXdhR4PQpfWd4yHd3lohyxJ") # clientSecret
+sp = ServicePrincipalAuthentication(tenant_id=os.environ['TENANT_ID'], # tenantID
+                                    service_principal_id=os.environ['SERVICE_PRINCIPAL_ID'], # clientId
+                                    service_principal_password=os.environ['SERVICE_PRINCIPAL_SECRET']) # clientSecret
+
+ws = Workspace.get(name=os.environ['AZML_WORKSPACE_NAME'],
+                   auth=sp,
+                   subscription_id=os.environ['SUBSCRIPTION_ID'],
+                   resource_group=os.environ['AZML_RESOURCE_GROUP'])
+
+ws.get_details()
 
 # COMMAND ----------
 
@@ -105,21 +107,6 @@ sp = ServicePrincipalAuthentication(tenant_id="72f988bf-86f1-41af-91ab-2d7cd011d
 # MAGIC If workspace creation fails for any reason other than already existing, please work with your IT administrator to provide you with the appropriate permissions or to provision the required resources.
 # MAGIC 
 # MAGIC **Note:** Creation of a new workspace can take several minutes.
-
-# COMMAND ----------
-
-# Import the Workspace class and check the Azure ML SDK version.
-from azureml.core import Workspace
-
-ws = Workspace.create(
-    name=workspace_name,
-    auth=sp,
-    subscription_id=subscription_id,
-    resource_group=resource_group,
-    location=workspace_region,
-    exist_ok=True,
-)
-ws.get_details()
 
 # COMMAND ----------
 
