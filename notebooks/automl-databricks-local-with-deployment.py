@@ -272,13 +272,22 @@ best_run, fitted_model = local_run.get_output()
 # COMMAND ----------
 
 from azureml.automl.core.shared import constants
-
+ 
 conda_env_file_name = "conda_env.yml"
 best_run.download_file(
     name="outputs/conda_env_v_1_0_0.yml", output_file_path=conda_env_file_name
 )
+ 
 with open(conda_env_file_name, "r") as conda_file:
     conda_file_contents = conda_file.read()
+    
+# Replace the target string
+conda_file_contents = conda_file_contents.replace('python=3.7.5', 'python=3.8.10')
+conda_file_contents = conda_file_contents.replace('pip:',"pip:\n  - azureml-defaults")
+ 
+# Write the file out again
+with open(conda_env_file_name, 'w') as file:
+    file.write(conda_file_contents)
     print(conda_file_contents)
 
 # COMMAND ----------
